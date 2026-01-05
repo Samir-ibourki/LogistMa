@@ -1,0 +1,19 @@
+{
+  "name": "logistima",
+  "version": "1.0.0",
+  "description": "LogistiMa - Système de dispatching intelligent pour livraison express à Casablanca",
+  "private": true,
+  "scripts": {
+    "dev:backend": "pnpm --filter backend dev",
+    "dev:worker": "pnpm --filter backend dev:worker",
+    "build": "pnpm --filter backend build",
+    "test": "pnpm --filter backend test",
+    "docker:up": "docker-compose up --build",
+    "docker:down": "docker-compose down",
+    "docker:logs": "docker-compose logs -f"
+  },
+  "keywords": ["logistics", "delivery", "casablanca", "express"],
+  "author": "",
+  "license": "ISC",
+  "packageManager": "pnpm@10.27.0"
+}
