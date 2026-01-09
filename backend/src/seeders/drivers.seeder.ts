@@ -8,8 +8,8 @@ export async function seedDrivers(): Promise<void> {
   // Get all zones
   const zones = await Zone.findAll();
   
-  if (zones.length === 0) {
-    console.log('⚠️ No zones found. Please seed zones first.');
+  if (zones.length < 8) {
+    console.log('⚠️ Not enough zones found. Please seed at least 8 zones first.');
     return;
   }
 
@@ -22,7 +22,7 @@ export async function seedDrivers(): Promise<void> {
       longitude: -7.6680,
       capacity: 5,
       status: 'available' as const,
-      zoneId: zones[0].id, // Sidi Maarouf
+      zoneId: zones[0]!.id, // Sidi Maarouf
     },
     {
       id: uuidv4(),
@@ -32,7 +32,7 @@ export async function seedDrivers(): Promise<void> {
       longitude: -7.6360,
       capacity: 4,
       status: 'available' as const,
-      zoneId: zones[1].id, // Anfa
+      zoneId: zones[1]!.id, // Anfa
     },
     {
       id: uuidv4(),
@@ -42,7 +42,7 @@ export async function seedDrivers(): Promise<void> {
       longitude: -7.6240,
       capacity: 6,
       status: 'available' as const,
-      zoneId: zones[2].id, // Gauthier
+      zoneId: zones[2]!.id, // Gauthier
     },
     {
       id: uuidv4(),
@@ -52,7 +52,7 @@ export async function seedDrivers(): Promise<void> {
       longitude: -7.6330,
       capacity: 5,
       status: 'busy' as const,
-      zoneId: zones[3].id, // Maarif
+      zoneId: zones[3]!.id, // Maarif
     },
     {
       id: uuidv4(),
@@ -62,7 +62,7 @@ export async function seedDrivers(): Promise<void> {
       longitude: -7.6710,
       capacity: 4,
       status: 'available' as const,
-      zoneId: zones[4].id, // Ain Diab
+      zoneId: zones[4]!.id, // Ain Diab
     },
     {
       id: uuidv4(),
@@ -72,7 +72,7 @@ export async function seedDrivers(): Promise<void> {
       longitude: -7.6800,
       capacity: 5,
       status: 'offline' as const,
-      zoneId: zones[5].id, // Hay Hassani
+      zoneId: zones[5]!.id, // Hay Hassani
     },
     {
       id: uuidv4(),
@@ -82,7 +82,7 @@ export async function seedDrivers(): Promise<void> {
       longitude: -7.6090,
       capacity: 6,
       status: 'available' as const,
-      zoneId: zones[6].id, // Derb Sultan
+      zoneId: zones[6]!.id, // Derb Sultan
     },
     {
       id: uuidv4(),
@@ -92,7 +92,7 @@ export async function seedDrivers(): Promise<void> {
       longitude: -7.5510,
       capacity: 5,
       status: 'available' as const,
-      zoneId: zones[7].id, // Ain Sebaa
+      zoneId: zones[7]!.id, // Ain Sebaa
     },
   ];
 

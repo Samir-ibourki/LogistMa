@@ -6,16 +6,11 @@ import { fileURLToPath } from 'url';
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-// Load .env from backend/src/ folder
-dotenv.config({ path: path.resolve(__dirname, '.env') });
-// Also try backend/ folder
-if (!process.env.DB_NAME) {
-  dotenv.config({ path: path.resolve(__dirname, '..', '.env') });
-}
-// Also try root folder
-if (!process.env.DB_NAME) {
-  dotenv.config({ path: path.resolve(__dirname, '..', '..', '..', '.env') });
-}
+// Load .env files - don't override already set environment variables
+// This allows Docker environment variables and CLI vars to take precedence
+dotenv.config({ path: path.resolve(__dirname, '..', '.env'), override: false });
+dotenv.config({ path: path.resolve(__dirname, '..', '..', '.env'), override: false });
+dotenv.config({ path: path.resolve(__dirname, '..', '..', '..', '.env'), override: false });
 
 const sequelize = new Sequelize(
   process.env.DB_NAME || 'logistima',

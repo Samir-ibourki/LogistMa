@@ -20,16 +20,16 @@ interface DeliveryAttributes {
 interface DeliveryCreationAttributes extends Optional<DeliveryAttributes, 'id'> {}
 
 class Delivery extends Model<DeliveryAttributes, DeliveryCreationAttributes> implements DeliveryAttributes {
-  public id!: string;
-  public parcelId!: string;
-  public driverId!: string;
-  public status!: 'assigned' | 'picked_up' | 'delivered' | 'failed';
-  public estimatedRoute!: string;
-  public receiptGenerated!: boolean;
-  public startedAt!: Date;
-  public completedAt!: Date;
-  public readonly createdAt!: Date;
-  public readonly updatedAt!: Date;
+  declare id: string;
+  declare parcelId: string;
+  declare driverId: string;
+  declare status: 'assigned' | 'picked_up' | 'delivered' | 'failed';
+  declare estimatedRoute: string;
+  declare receiptGenerated: boolean;
+  declare startedAt: Date;
+  declare completedAt: Date;
+  declare readonly createdAt: Date;
+  declare readonly updatedAt: Date;
 }
 
 Delivery.init(

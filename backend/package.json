@@ -11,9 +11,9 @@
     "start:worker": "node dist/workers/worker.js",
     "test": "jest --passWithNoTests",
     "test:coverage": "jest --coverage",
-    "migrate": "ts-node-dev src/migrations/index.ts",
-    "migrate:down": "ts-node-dev src/migrations/index.ts down",
-    "seed": "ts-node-dev src/seeders/index.ts",
+    "migrate": "tsx src/migrations/index.ts",
+    "migrate:down": "tsx src/migrations/index.ts down",
+    "seed": "tsx src/seeders/index.ts",
     "db:reset": "pnpm migrate:down && pnpm migrate && pnpm seed"
   },
   "keywords": [],

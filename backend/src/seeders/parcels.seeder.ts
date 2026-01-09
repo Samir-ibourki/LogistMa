@@ -7,8 +7,8 @@ export async function seedParcels(): Promise<void> {
 
   const zones = await Zone.findAll();
 
-  if (zones.length === 0) {
-    console.log("⚠️ No zones found. Please seed zones first.");
+  if (zones.length < 7) {
+    console.log("⚠️ Not enough zones found. Please seed at least 7 zones first.");
     return;
   }
 
@@ -24,7 +24,7 @@ export async function seedParcels(): Promise<void> {
       deliveryLat: 33.589,
       deliveryLng: -7.622,
       weight: 2.5,
-      zoneId: zones[3].id, // Maarif
+      zoneId: zones[3]!.id, // Maarif
       driverId: null,
     },
     {
@@ -38,7 +38,7 @@ export async function seedParcels(): Promise<void> {
       deliveryLat: 33.594,
       deliveryLng: -7.67,
       weight: 1.2,
-      zoneId: zones[1].id, // Anfa
+      zoneId: zones[1]!.id, // Anfa
       driverId: null,
     },
     {
@@ -52,7 +52,7 @@ export async function seedParcels(): Promise<void> {
       deliveryLat: 33.546,
       deliveryLng: -7.679,
       weight: 5.0,
-      zoneId: zones[0].id, // Sidi Maarouf
+      zoneId: zones[0]!.id, // Sidi Maarouf
       driverId: null,
     },
     {
@@ -66,7 +66,7 @@ export async function seedParcels(): Promise<void> {
       deliveryLat: 33.61,
       deliveryLng: -7.55,
       weight: 8.5,
-      zoneId: zones[6].id, // Derb Sultan
+      zoneId: zones[6]!.id, // Derb Sultan
       driverId: null,
     },
     {
@@ -80,7 +80,7 @@ export async function seedParcels(): Promise<void> {
       deliveryLat: 33.577,
       deliveryLng: -7.634,
       weight: 0.8,
-      zoneId: zones[4].id, // Ain Diab
+      zoneId: zones[4]!.id, // Ain Diab
       driverId: null,
     },
   ];

@@ -1,7 +1,6 @@
 import type { Request, Response, NextFunction } from "express";
-import Delivery from "../models/Delivery.js";
-import Parcel from "../models/Parcel.js";
-import Driver from "../models/Driver.js";
+import { Delivery, Parcel, Driver } from "../models/index.js";
+import { DispatchService } from "../services/index.js";
 
 export const createDelivery = async (
   req: Request,
@@ -83,8 +82,8 @@ export const getAllDeliveries = async (
     const deliveries = await Delivery.findAll({
       where: whereClause,
       include: [
-        { model: Parcel, as: "parcel" },
-        { model: Driver, as: "driver" },
+        { model: Parcel },
+        { model: Driver },
       ],
     });
 
@@ -107,8 +106,8 @@ export const getDeliveryById = async (
 
     const delivery = await Delivery.findByPk(id, {
       include: [
-        { model: Parcel, as: "parcel" },
-        { model: Driver, as: "driver" },
+        { model: Parcel },
+        { model: Driver },
       ],
     });
 
@@ -147,8 +146,8 @@ export const updateDeliveryStatus = async (
 
     const delivery = await Delivery.findByPk(id, {
       include: [
-        { model: Parcel, as: "parcel" },
-        { model: Driver, as: "driver" },
+        { model: Parcel },
+        { model: Driver },
       ],
     });
 
@@ -198,7 +197,7 @@ export const getDriverDeliveries = async (
 
     const deliveries = await Delivery.findAll({
       where: { driverId },
-      include: [{ model: Parcel, as: "parcel" }],
+      include: [{ model: Parcel }],
       order: [["createdAt", "DESC"]],
     });
 
