@@ -19,16 +19,16 @@ interface DriverAttributes {
 interface DriverCreationAttributes extends Optional<DriverAttributes, 'id'> {}
 
 class Driver extends Model<DriverAttributes, DriverCreationAttributes> implements DriverAttributes {
-  public id!: string;
-  public name!: string;
-  public phone!: string;
-  public latitude!: number;
-  public longitude!: number;
-  public capacity!: number;
-  public status!: 'available' | 'busy' | 'offline';
-  public zoneId!: string;
-  public readonly createdAt!: Date;
-  public readonly updatedAt!: Date;
+  declare id: string;
+  declare name: string;
+  declare phone: string;
+  declare latitude: number;
+  declare longitude: number;
+  declare capacity: number;
+  declare status: 'available' | 'busy' | 'offline';
+  declare zoneId: string;
+  declare readonly createdAt: Date;
+  declare readonly updatedAt: Date;
 }
 
 Driver.init(

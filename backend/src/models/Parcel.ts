@@ -16,7 +16,7 @@ interface ParcelAttributes {
   deliveryLng: number;
   weight: number;
   zoneId: string;
-  driverId: string;
+  driverId: string | null;
   createdAt?: Date;
   updatedAt?: Date;
 }
@@ -24,20 +24,20 @@ interface ParcelAttributes {
 interface ParcelCreationAttributes extends Optional<ParcelAttributes, 'id'> {}
 
 class Parcel extends Model<ParcelAttributes, ParcelCreationAttributes> implements ParcelAttributes {
-  public id!: string;
-  public trackingCode!: string;
-  public status!: 'pending' | 'assigned' | 'picked_up' | 'delivered' | 'cancelled';
-  public pickupAddress!: string;
-  public pickupLat!: number;
-  public pickupLng!: number;
-  public deliveryAddress!: string;
-  public deliveryLat!: number;
-  public deliveryLng!: number;
-  public weight!: number;
-  public zoneId!: string;
-  public driverId!: string;
-  public readonly createdAt!: Date;
-  public readonly updatedAt!: Date;
+  declare id: string;
+  declare trackingCode: string;
+  declare status: 'pending' | 'assigned' | 'picked_up' | 'delivered' | 'cancelled';
+  declare pickupAddress: string;
+  declare pickupLat: number;
+  declare pickupLng: number;
+  declare deliveryAddress: string;
+  declare deliveryLat: number;
+  declare deliveryLng: number;
+  declare weight: number;
+  declare zoneId: string;
+  declare driverId: string | null;
+  declare readonly createdAt: Date;
+  declare readonly updatedAt: Date;
 }
 
 Parcel.init(
@@ -93,7 +93,7 @@ Parcel.init(
     },
     driverId: {
       type: DataTypes.UUID,
-      allowNull: false,
+      allowNull: true,
       references: {
         model: Driver,
         key: 'id',

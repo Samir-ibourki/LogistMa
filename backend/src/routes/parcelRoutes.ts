@@ -8,6 +8,7 @@ import {
   updateParcel,
   updateParcelStatus,
   deleteParcel,
+  dispatchParcel,
 } from "../controllers/parcelControllers.js";
 
 const router: RouterType = Router();
@@ -18,6 +19,7 @@ router.get("/track/:trackingCode", getParcelByTrackingCode);
 router.get("/:id", getParcelById);
 router.put("/:id", updateParcel);
 router.patch("/:id/status", updateParcelStatus);
+router.post("/:id/dispatch", dispatchParcel);
 router.delete("/:id", deleteParcel);
 
 export default router;

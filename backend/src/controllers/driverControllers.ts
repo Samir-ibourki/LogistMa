@@ -1,6 +1,5 @@
 import type { Request, Response, NextFunction } from "express";
-import Driver from "../models/Driver.js";
-import Zone from "../models/Zone.js";
+import { Driver, Zone } from "../models/index.js";
 
 export const createDriver = async (
   req: Request,
@@ -50,7 +49,7 @@ export const getAllDrivers = async (
 ) => {
   try {
     const drivers = await Driver.findAll({
-      include: [{ model: Zone, as: "zone" }],
+      include: [{ model: Zone }],
     });
     return res.status(200).json({
       success: true,
@@ -70,7 +69,7 @@ export const getDriverById = async (
     const { id } = req.params;
 
     const driver = await Driver.findByPk(id, {
-      include: [{ model: Zone, as: "zone" }],
+      include: [{ model: Zone }],
     });
 
     if (!driver) {
@@ -104,7 +103,7 @@ export const getAvailableDrivers = async (
 
     const drivers = await Driver.findAll({
       where: whereClause,
-      include: [{ model: Zone, as: "zone" }],
+      include: [{ model: Zone }],
     });
 
     return res.status(200).json({

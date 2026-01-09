@@ -15,13 +15,13 @@ interface ZoneAttributes {
 interface ZoneCreationAttributes extends Optional<ZoneAttributes, 'id'> {}
 
 class Zone extends Model<ZoneAttributes, ZoneCreationAttributes> implements ZoneAttributes {
-  public id!: string;
-  public name!: string;
-  public centerLat!: number;
-  public centerLng!: number;
-  public radius!: number;
-  public readonly createdAt!: Date;
-  public readonly updatedAt!: Date;
+  declare id: string;
+  declare name: string;
+  declare centerLat: number;
+  declare centerLng: number;
+  declare radius: number;
+  declare readonly createdAt: Date;
+  declare readonly updatedAt: Date;
 }
 
 Zone.init(

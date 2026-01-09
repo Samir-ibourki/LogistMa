@@ -1,8 +1,7 @@
 import type { Request, Response, NextFunction } from "express";
 import { v4 as uuidv4 } from "uuid";
-import Parcel from "../models/Parcel.js";
-import Zone from "../models/Zone.js";
-import Driver from "../models/Driver.js";
+import { Parcel, Zone, Driver } from "../models/index.js";
+import { DispatchService } from "../services/index.js";
 
 export const createParcel = async (
   req: Request,
@@ -76,8 +75,8 @@ export const getAllParcels = async (
     const parcels = await Parcel.findAll({
       where: whereClause,
       include: [
-        { model: Zone, as: "zone" },
-        { model: Driver, as: "driver" },
+        { model: Zone },
+        { model: Driver },
       ],
     });
 
@@ -100,8 +99,8 @@ export const getParcelById = async (
 
     const parcel = await Parcel.findByPk(id, {
       include: [
-        { model: Zone, as: "zone" },
-        { model: Driver, as: "driver" },
+        { model: Zone },
+        { model: Driver },
       ],
     });
 
@@ -132,8 +131,8 @@ export const getParcelByTrackingCode = async (
     const parcel = await Parcel.findOne({
       where: { trackingCode },
       include: [
-        { model: Zone, as: "zone" },
-        { model: Driver, as: "driver" },
+        { model: Zone },
+        { model: Driver },
       ],
     });
 
@@ -241,6 +240,51 @@ export const deleteParcel = async (
     return res.status(200).json({
       success: true,
       message: "Parcel deleted successfully",
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+
+/**
+ * Dispatch a parcel to the best available driver
+ * POST /api/parcels/:id/dispatch
+ */
+export const dispatchParcel = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    const { id } = req.params;
+
+    if (!id) {
+      return res.status(400).json({
+        success: false,
+        message: "Parcel ID is required",
+      });
+    }
+
+    const result = await DispatchService.dispatchParcel(id);
+
+    if (!result.success) {
+      return res.status(400).json({
+        success: false,
+        message: result.message,
+      });
+    }
+
+    return res.status(200).json({
+      success: true,
+      message: result.message,
+      data: {
+        delivery: result.delivery,
+        driver: {
+          id: result.driver?.id,
+          name: result.driver?.name,
+          phone: result.driver?.phone,
+        },
+      },
     });
   } catch (error) {
     next(error);
