@@ -9,7 +9,9 @@ describe("Redis test", () => {
 
     it("should set and get value", async () => {
         await redis.set("hello", "world");
+        await redis.set("test", "ok");
+        console.log(await redis.get("test"));
         const value = await redis.get("hello");
         expect(value).toBe("world");
-    }, 10000);
+    });
 });
