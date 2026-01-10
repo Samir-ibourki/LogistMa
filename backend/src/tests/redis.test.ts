@@ -8,7 +8,7 @@ describe("Redis test", () => {
 
     it("should set and get value", async () => {
         await redisConnection.set("hello", "world");
-        const value = await redisConnection.get("hello");
+        const value = await redisConnection.get("world");
         expect(value).toBe("world");
     });
 });
