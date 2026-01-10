@@ -10,14 +10,16 @@ app.use(express.json());
 app.get("/health", (req, res) => {
   res.json({ status: "ok", timestamp: new Date().toISOString() });
 });
-
+app.get("/", (req, res) => {
+  res.json({ message: "hello world" })
+})
 app.use("/api", routes);
 
 async function startServer() {
   try {
     await sequelize.authenticate();
     console.log("✅ Database connected");
-    await sequelize.sync({ alter: true });
+    await sequelize.sync({ force: true });
     console.log("✅ Models synchronized");
     app.listen(PORT, () => {
       console.log(`🚀 Server running on http://localhost:${PORT}`);
