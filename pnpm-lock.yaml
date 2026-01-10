@@ -10,6 +10,9 @@ importers:
 
   backend:
     dependencies:
+      '@jest/globals':
+        specifier: ^30.2.0
+        version: 30.2.0
       bullmq:
         specifier: ^5.66.4
         version: 5.66.4
