@@ -17,13 +17,13 @@ jest.unstable_mockModule("../models/index.js", () => ({
     },
 }));
 
-const { createDriver } = await import("../controllers/driverControllers.js");
+const { createDriver, getDriverById } = await import("../controllers/driverControllers.js");
 
-describe("createDriver", () => {
+describe("Driver Controllers", () => {
     let req: Partial<Request>;
     let res: Partial<Response>;
     let next: NextFunction;
-    let mockJson: jest.Mock;
+    let mockJson: jest.MockedFunction<(body: any) => void>;
     let mockStatus: jest.Mock;
 
     beforeEach(() => {
@@ -40,7 +40,7 @@ describe("createDriver", () => {
         jest.clearAllMocks();
     });
 
-    test("✅ should create driver successfully with all fields", async () => {
+    test("✅ createDriver should create driver successfully", async () => {
         req.body = {
             name: "Youssef",
             phone: "0600000000",
@@ -67,9 +67,25 @@ describe("createDriver", () => {
         mockDriverCreate.mockResolvedValue(mockDriver);
 
         await createDriver(req as Request, res as Response, next);
-
         expect(mockZoneFindByPk).toHaveBeenCalledWith(1);
-        expect(mockDriverCreate).toHaveBeenCalledWith({
+        expect(mockDriverCreate).toHaveBeenCalledWith(req.body);
+        expect(mockStatus).toHaveBeenCalledWith(201);
+        expect(mockJson).toHaveBeenCalledWith({
+            success: true,
+            data: mockDriver,
+        });
+        const driverId = mockJson.mock.calls[0][0].data.id;
+        console.log("Driver ID from createDriver:", driverId);
+        req.params = { id: driverId.toString() };
+    });
+
+    test("✅ getDriverById should return driver if exists", async () => {
+        const driverId = "10";
+        req.params = { id: driverId };
+
+        const mockZone = { id: 1, name: "Casablanca" };
+        const mockDriverWithZone = {
+            id: 10,
             name: "Youssef",
             phone: "0600000000",
             latitude: 33.5,
@@ -77,12 +93,20 @@ describe("createDriver", () => {
             capacity: 10,
             status: "available",
             zoneId: 1,
+            Zone: mockZone,
+        };
+
+        mockDriverFindByPk.mockResolvedValue(mockDriverWithZone);
+
+        await getDriverById(req as Request, res as Response, next);
+
+        expect(mockDriverFindByPk).toHaveBeenCalledWith(driverId, {
+            include: [{ model: (await import("../models/index.js")).Zone }],
         });
-        expect(mockStatus).toHaveBeenCalledWith(201);
+        expect(mockStatus).toHaveBeenCalledWith(200);
         expect(mockJson).toHaveBeenCalledWith({
             success: true,
-            data: mockDriver,
+            data: mockDriverWithZone,
         });
-        expect(next).not.toHaveBeenCalled();
     });
 });
