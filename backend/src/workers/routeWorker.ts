@@ -1,7 +1,3 @@
-/**
- * Route Worker - Processes route calculation jobs
- */
-
 import { Worker, Job } from 'bullmq';
 import { redisConnection } from '../config/redis.js';
 import { Delivery } from '../models/index.js';
@@ -19,21 +15,18 @@ export const routeWorker = new Worker<RouteJobData>(
   'route-calculation',
   async (job: Job<RouteJobData>) => {
     const { deliveryId, pickupLat, pickupLng, deliveryLat, deliveryLng } = job.data;
-    
+
     console.log(`📍 [RouteWorker] Processing route for delivery ${deliveryId}`);
-    
+
     try {
-      // Calculate the route
       const route = calculateRoute(pickupLat, pickupLng, deliveryLat, deliveryLng);
-      
-      // Update the delivery with the calculated route
       await Delivery.update(
         { estimatedRoute: JSON.stringify(route) },
         { where: { id: deliveryId } }
       );
-      
+
       console.log(`✅ [RouteWorker] Route calculated: ${route.distance}km, ${route.estimatedTime}min`);
-      
+
       return {
         success: true,
         deliveryId,
@@ -47,11 +40,9 @@ export const routeWorker = new Worker<RouteJobData>(
   },
   {
     connection: redisConnection,
-    concurrency: 5, // Process up to 5 jobs concurrently
+    concurrency: 5,
   }
 );
-
-// Event listeners
 routeWorker.on('completed', (job) => {
   console.log(`✅ [RouteWorker] Job ${job.id} completed`);
 });
