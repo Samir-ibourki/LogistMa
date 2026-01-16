@@ -32,6 +32,8 @@ async function startServer() {
 
 startServer();
 
+//Create zone ➡️ 2. Create driver (with zoneId) ➡️ 3. Create parcel (with zoneId) ➡️ 4. Dispatch ➡️ 5. Pickup ➡️ 6. Deliver
+
 //POST http://localhost:3000/api/zones
 // {
 //   "name": "Casablanca Centre",
