@@ -11,8 +11,8 @@ app.get("/health", (req, res) => {
   res.json({ status: "ok", timestamp: new Date().toISOString() });
 });
 app.get("/", (req, res) => {
-  res.json({ message: "hello world" })
-})
+  res.json({ message: "hello world" });
+});
 app.use("/api", routes);
 
 async function startServer() {
@@ -31,3 +31,11 @@ async function startServer() {
 }
 
 startServer();
+
+//POST http://localhost:3000/api/zones
+// {
+//   "name": "Casablanca Centre",
+//   "centerLat": 33.5731,
+//   "centerLng": -7.5898,
+//   "radius": 5000
+// }

@@ -1,0 +1,11 @@
+import { Router } from "express";
+import { createDriver, getAllDrivers, getDriverById, getAvailableDrivers, updateDriver, updateDriverStatus, deleteDriver, } from "../controllers/driverControllers.js";
+const router = Router();
+router.post("/", createDriver);
+router.get("/", getAllDrivers);
+router.get("/available", getAvailableDrivers);
+router.get("/:id", getDriverById);
+router.put("/:id", updateDriver);
+router.patch("/:id/status", updateDriverStatus);
+router.delete("/:id", deleteDriver);
+export default router;
